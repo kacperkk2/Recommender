@@ -28,7 +28,8 @@ INSTALLED_APPS = [
 
     'rest_framework',
 
-    'algorithms'
+    'algorithms',
+    'data_sets'
 ]
 
 MIDDLEWARE = [
