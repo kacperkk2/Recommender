@@ -4,7 +4,6 @@ import React from 'react';
 const { Header, Content, Footer } = Layout;
 
 const RecommenderLayout = (props) => {
-    console.log(props.children);
     return(
         <Layout className="layout">
             <Header>
