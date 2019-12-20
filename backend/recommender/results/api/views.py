@@ -1,9 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from .serializers import RecommendationElementSerializer
 
 from src.results_utils import user_history, users_id_list, recommend
-from django.http import JsonResponse
 
 
 class ResultsView(APIView):
@@ -17,5 +17,6 @@ class ResultsView(APIView):
         # payload = users_id_list(data)
         payload = recommend(alg, data, user_id)
 
-        response = Response({"ranking_list": payload}, status=status.HTTP_200_OK)
+        serializer = RecommendationElementSerializer(payload, many=True)
+        response = Response(serializer.data, status=status.HTTP_200_OK)
         return response

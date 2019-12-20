@@ -10,6 +10,9 @@ from src.algorithms.sar import SAR
 from src.algorithms import reco_utils
 sys.modules['reco_utils'] = reco_utils
 
+from results.models import RecommendationElement
+from histories.models import HistoryElement
+
 
 COL_USER = "UserId"
 COL_ITEM = "PathId"
@@ -36,7 +39,9 @@ def recommend(algorithm, data_set, user_id):
     file.close()
 
     recommendations = model.recommend(saved_model, user_id)
-    return recommendations
+    recommendation_objects = [RecommendationElement(*(eval(recommendation))) for recommendation in recommendations]
+
+    return recommendation_objects
 
 
 def users_id_list(data_set):
@@ -46,7 +51,10 @@ def users_id_list(data_set):
 
 def user_history(data_set, user_id):
     data = pd.read_csv(f"{os.path.dirname(os.path.abspath(__file__))}/data_sets/{data_set}.txt", sep=";", names=[COL_USER, COL_ITEM, COL_RATING, COL_TIMESTAMP])
-    return data[data[COL_USER] == user_id][COL_ITEM].to_list()
+    history = data[data[COL_USER] == user_id][COL_ITEM].to_list()
+    history_objects = [HistoryElement(*(eval(history_element))) for history_element in history]
+
+    return history_objects
 
 
 # if __name__ == '__main__':

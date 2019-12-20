@@ -11,7 +11,7 @@ class App extends React.Component {
     pickedAlgorithm: '',
     pickedDataSet: '',
     pickedUserId: '',
-    recommendations: {}
+    recommendations: []
   }
 
   pickedAlgorithm = (e) => {
@@ -31,8 +31,10 @@ class App extends React.Component {
             this.setState({
               recommendations: res.data
             });
+            console.log(res.data);
         })
     }
+    console.log(this.state.recommendations);
   }
 
   render() {
@@ -47,8 +49,9 @@ class App extends React.Component {
               <h2> User id: </h2>
               <UserId userIdSubmit={this.userIdSubmit}/>
 
+              <h2> Recommendations list: </h2>
               <div>
-                {this.state.recommendations}
+                {this.state.recommendations.map( recommendation => <div> {recommendation.name} </div>)}
               </div>
           </div>
       );
