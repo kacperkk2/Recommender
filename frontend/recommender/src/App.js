@@ -9,9 +9,10 @@ import axios from 'axios';
 class App extends React.Component {
   state = {
     pickedAlgorithm: '',
-    pickedDataSet: '',
+    pickedDataSet: {},
     pickedUserId: '',
-    recommendations: []
+    recommendations: [],
+    userHistory: []
   }
 
   pickedAlgorithm = (e) => {
@@ -19,22 +20,27 @@ class App extends React.Component {
       this.setState( {pickedAlgorithm: e.target.value} )
   }
 
-  pickedDataSet = (e) => {
-    console.log(e.target.value)
-    this.setState( {pickedDataSet: e.target.value} )
+  pickedDataSet = (dataSet) => {
+    console.log(dataSet)
+    this.setState( {pickedDataSet: dataSet} )
   }
 
   userIdSubmit = (userIdInput) => {
-    if(this.state.pickedAlgorithm !== '' && this.state.pickedDataSet !== '') {
-      axios.get(`http://localhost:8000/results?alg=${this.state.pickedAlgorithm}&data=${this.state.pickedDataSet}&user_id=${userIdInput}`)
+    if(this.state.pickedAlgorithm !== '' && Object.getOwnPropertyNames(this.state.pickedDataSet).length !== 0) {
+      axios.get(`http://localhost:8000/results?alg=${this.state.pickedAlgorithm}&data=${this.state.pickedDataSet.name}&user_id=${userIdInput}`)
         .then(res => {
             this.setState({
               recommendations: res.data
             });
-            console.log(res.data);
-        })
+        });
+
+      axios.get(`http://localhost:8000/histories/?data=${this.state.pickedDataSet.name}&user_id=${userIdInput}`)
+        .then(res => {
+            this.setState({
+              userHistory: res.data
+            });
+        });
     }
-    console.log(this.state.recommendations);
   }
 
   render() {
@@ -47,11 +53,15 @@ class App extends React.Component {
               <DataSetList picked={this.state.pickedDataSet} pickedDataSet={this.pickedDataSet}/>
           
               <h2> User id: </h2>
-              <UserId userIdSubmit={this.userIdSubmit}/>
+              <UserId pickedDataSet={this.state.pickedDataSet} userIdSubmit={this.userIdSubmit} />
 
               <h2> Recommendations list: </h2>
               <div>
                 {this.state.recommendations.map( recommendation => <div> {recommendation.name} </div>)}
+              </div>
+              <h2> User history: </h2>
+              <div>
+                {this.state.userHistory.map( historyElement => <div> {historyElement.name} </div>)}
               </div>
           </div>
       );

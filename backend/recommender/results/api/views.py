@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import RecommendationElementSerializer
 
-from src.results_utils import user_history, users_id_list, recommend
+from src.results_utils import recommend
 
 
 class ResultsView(APIView):
@@ -13,8 +13,6 @@ class ResultsView(APIView):
         data = request.GET.get('data', None)
         user_id = int(request.GET.get('user_id', None))
 
-        # payload = user_history(data, user_id)
-        # payload = users_id_list(data)
         payload = recommend(alg, data, user_id)
 
         serializer = RecommendationElementSerializer(payload, many=True)

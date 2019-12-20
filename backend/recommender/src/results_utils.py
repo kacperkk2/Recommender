@@ -44,9 +44,15 @@ def recommend(algorithm, data_set, user_id):
     return recommendation_objects
 
 
-def users_id_list(data_set):
+def get_data_set_info(data_set, number_of_ids):
     data = pd.read_csv(f"{os.path.dirname(os.path.abspath(__file__))}/data_sets/{data_set}.txt", sep=";", names=[COL_USER, COL_ITEM, COL_RATING, COL_TIMESTAMP])
-    return list(data[COL_USER].unique())
+    data_set_info = dict()
+    data_set_info['users_num'] = data[COL_USER].nunique()
+    data_set_info['items_num'] = data[COL_ITEM].nunique()
+    data_set_info['users_id_sample'] = list(data[COL_USER].unique())[:number_of_ids]
+    data_set_info['density'] = (len(data.index) / (data_set_info['users_num'] * data_set_info['items_num'])) * 100
+    data_set_info['density'] = round(data_set_info['density'], 2)
+    return data_set_info
 
 
 def user_history(data_set, user_id):
