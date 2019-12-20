@@ -21,7 +21,7 @@ class AlgorithmListView(ListAPIView):
             for algorithm in algorithms:
                 if algorithm not in [alg.short for alg in queryset]:
                     Algorithm.objects.create(
-                        name="",
+                        name=algorithm,
                         short=algorithm,
                         link=""
                     )

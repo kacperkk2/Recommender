@@ -1,4 +1,5 @@
 import React from 'react';
+import { InputNumber, Button } from 'antd';
 
 class UserId extends React.Component {
 
@@ -6,8 +7,8 @@ class UserId extends React.Component {
         userIdInput: ''
     }
 
-    handleChange = (e) => {
-        this.setState( {userIdInput: e.target.value} )
+    handleChange = (value) => {
+        this.setState( {userIdInput: value} )
     }
 
     userIdSubmit = (e) => {
@@ -36,7 +37,8 @@ class UserId extends React.Component {
         return (
             <div>
                 <form onSubmit={this.userIdSubmit}>
-                    <input type="text" placeholder="User id" onChange={this.handleChange} />
+                    <InputNumber min={1} defaultValue={1} onChange={this.handleChange} />
+                    {/* <Button type="primary" onSubmit={this.userIdSubmit}>Recommend!</Button> */}
                     <input type="submit" value="Recommend!" />
                 </form>
 

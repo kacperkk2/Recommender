@@ -1,6 +1,7 @@
 import React from 'react';
 import Algorithm from './Algorithm';
 import axios from 'axios';
+import { List } from 'antd';
 
 class AlgorithmList extends React.Component {
     state = {
@@ -17,10 +18,24 @@ class AlgorithmList extends React.Component {
     }
 
     render() {
-        return this.state.algorithms.map(
-            (algorithm) => (
-                <Algorithm key={algorithm.short} picked={this.props.picked} algorithm={algorithm} pickedAlgorithm={this.props.pickedAlgorithm}/>
-            )
+        return (
+            <List
+                grid={{
+                gutter: 16,
+                xs: 1,
+                sm: 2,
+                md: 4,
+                lg: 4,
+                xl: 6,
+                xxl: 3,
+                }}
+                dataSource={this.state.algorithms}
+                renderItem={algorithm => (
+                <List.Item>
+                    <Algorithm key={algorithm.short} picked={this.props.picked} algorithm={algorithm} pickedAlgorithm={this.props.pickedAlgorithm}/>
+                </List.Item>
+                )}
+            />
         );
     }
 }

@@ -13,8 +13,13 @@ class ResultsView(APIView):
         data = request.GET.get('data', None)
         user_id = int(request.GET.get('user_id', None))
 
-        payload = recommend(alg, data, user_id)
+        try:
+            payload = recommend(alg, data, user_id)
+            serializer = RecommendationElementSerializer(payload, many=True)
+            response_data = serializer.data
+        except KeyError:
+            response_data = "Invalid user id"
 
-        serializer = RecommendationElementSerializer(payload, many=True)
-        response = Response(serializer.data, status=status.HTTP_200_OK)
+        response = Response(response_data, status=status.HTTP_200_OK)
+        print(response)
         return response

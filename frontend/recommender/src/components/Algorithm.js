@@ -1,24 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Card } from 'antd';
 
 class Algorithm extends React.Component {
     elementStyle = () => {
         return {
-            backgroundColor: (this.props.algorithm.short === this.props.picked) 
+            backgroundColor: (this.props.algorithm.short === this.props.picked.short) 
                 ? '#add8e6' : '#f4f4f4',
             padding: '10px',
-            borderBottom: '2px #ccc dotted'
+            margin: '10px',
+            cursor: 'pointer'
         }
+    }
+
+    pickedAlgorithm = () => {
+        this.props.pickedAlgorithm(this.props.algorithm);
     }
 
     render() {
         return (
-            <div style={this.elementStyle()}>
-                <p>
-                    <input type="radio" value={this.props.algorithm.short} name="algorithm" onChange={this.props.pickedAlgorithm} />
-                    {this.props.algorithm.short} 
-                </p>
-            </div>
+            <Card title={this.props.algorithm.name} style={this.elementStyle()} onClick={this.pickedAlgorithm} bordered={false} >
+                <p>Short name: {this.props.algorithm.short}</p>
+                <p>Description: {this.props.algorithm.link}</p>
+            </Card>
         );
     }
 }

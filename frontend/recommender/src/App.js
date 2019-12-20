@@ -1,5 +1,5 @@
 import React from 'react';
-// import 'antd/dist/antd.css';
+import 'antd/dist/antd.css';
 
 import AlgorithmList from './components/AlgorithmList';
 import DataSetList from './components/DataSetList';
@@ -8,16 +8,16 @@ import axios from 'axios';
 
 class App extends React.Component {
   state = {
-    pickedAlgorithm: '',
+    pickedAlgorithm: {},
     pickedDataSet: {},
     pickedUserId: '',
     recommendations: [],
     userHistory: []
   }
 
-  pickedAlgorithm = (e) => {
-      console.log(e.target.value)
-      this.setState( {pickedAlgorithm: e.target.value} )
+  pickedAlgorithm = (algorithm) => {
+      console.log(algorithm)
+      this.setState( {pickedAlgorithm: algorithm} )
   }
 
   pickedDataSet = (dataSet) => {
@@ -26,9 +26,12 @@ class App extends React.Component {
   }
 
   userIdSubmit = (userIdInput) => {
-    if(this.state.pickedAlgorithm !== '' && Object.getOwnPropertyNames(this.state.pickedDataSet).length !== 0) {
-      axios.get(`http://localhost:8000/results?alg=${this.state.pickedAlgorithm}&data=${this.state.pickedDataSet.name}&user_id=${userIdInput}`)
+    if(Object.getOwnPropertyNames(this.state.pickedAlgorithm).length !== 0 && 
+    Object.getOwnPropertyNames(this.state.pickedDataSet).length !== 0) {
+
+      axios.get(`http://localhost:8000/results?alg=${this.state.pickedAlgorithm.short}&data=${this.state.pickedDataSet.name}&user_id=${userIdInput}`)
         .then(res => {
+            console.log(res.data)
             this.setState({
               recommendations: res.data
             });
@@ -36,6 +39,7 @@ class App extends React.Component {
 
       axios.get(`http://localhost:8000/histories/?data=${this.state.pickedDataSet.name}&user_id=${userIdInput}`)
         .then(res => {
+            console.log(res.data)
             this.setState({
               userHistory: res.data
             });
@@ -45,7 +49,7 @@ class App extends React.Component {
 
   render() {
       return (
-          <div className="App">
+          <div className="App" style={{padding: '20px', background: '#ECECEC'}}>
               <h2> Algorithms: </h2>
               <AlgorithmList picked={this.state.pickedAlgorithm} pickedAlgorithm={this.pickedAlgorithm}/>
               
@@ -57,11 +61,11 @@ class App extends React.Component {
 
               <h2> Recommendations list: </h2>
               <div>
-                {this.state.recommendations.map( recommendation => <div> {recommendation.name} </div>)}
+                {this.state.recommendations.map( recommendation => <div> {recommendation.name}, {recommendation.crag}, {recommendation.sector} </div>)}
               </div>
               <h2> User history: </h2>
               <div>
-                {this.state.userHistory.map( historyElement => <div> {historyElement.name} </div>)}
+                {this.state.userHistory.map( historyElement => <div> {historyElement.name}, {historyElement.crag}, {historyElement.sector} </div>)}
               </div>
           </div>
       );

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Card } from 'antd';
 
 class DataSet extends React.Component {
     elementStyle = () => {
@@ -7,7 +8,8 @@ class DataSet extends React.Component {
             backgroundColor: (this.props.dataSet.name === this.props.picked.name) 
                 ? '#add8e6' : '#f4f4f4',
             padding: '10px',
-            borderBottom: '2px #ccc dotted'
+            margin: '10px',
+            cursor: 'pointer'
         }
     }
 
@@ -17,12 +19,12 @@ class DataSet extends React.Component {
 
     render() {
         return (
-            <div style={this.elementStyle()}>
-                <p>
-                    <input type="radio" value={this.props.dataSet.name} name="dataSet" onChange={this.pickedDataSet} />
-                    {this.props.dataSet.name} 
-                </p>
-            </div>
+            <Card title={this.props.dataSet.name} style={this.elementStyle()} onClick={this.pickedDataSet} bordered={false} >
+                <p>Number of users: {this.props.dataSet.users_num}</p>
+                <p>Number of items: {this.props.dataSet.items_num}</p>
+                <p>Density: {this.props.dataSet.density}%</p>
+                <p>Description: {this.props.dataSet.description}</p>
+            </Card>
         );
     }
 }
