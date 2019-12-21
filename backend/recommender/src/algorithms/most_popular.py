@@ -33,6 +33,9 @@ class MostPopular(object):
 
     def recommend(self, saved_model, user_id, top_k=10):
         self.available_data, self.popularity = saved_model
+        if user_id not in self.available_data[COL_USER].unique():
+            raise KeyError
+
         user_seq = self.available_data[self.available_data[COL_USER] == user_id][COL_ITEM].tolist()
 
         ranking_list = [item_occurences[0] for item_occurences in

@@ -57,7 +57,7 @@ class App extends React.Component {
               <DataSetList picked={this.state.pickedDataSet} pickedDataSet={this.pickedDataSet}/>
           
               <h2> User id: </h2>
-              <UserId pickedDataSet={this.state.pickedDataSet} userIdSubmit={this.userIdSubmit} />
+              <UserId pickedDataSet={this.state.pickedDataSet} pickedAlgorithm={this.state.pickedAlgorithm} userIdSubmit={this.userIdSubmit} />
 
               <h2> Recommendations list: </h2>
               <div>

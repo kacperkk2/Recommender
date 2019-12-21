@@ -6,4 +6,4 @@ from ..models import Algorithm
 class AlgorithmSerializer(serializers.ModelSerializer):
     class Meta:
         model = Algorithm
-        fields = ('name', 'short', 'link')
+        fields = ('name', 'short', 'description')

@@ -4,7 +4,7 @@ import { InputNumber, Button } from 'antd';
 class UserId extends React.Component {
 
     state = {
-        userIdInput: ''
+        userIdInput: '1'
     }
 
     handleChange = (value) => {
@@ -33,13 +33,18 @@ class UserId extends React.Component {
         }
     }
 
+    isAlgorithmAndDataSetPicked = () => {
+        return (Object.getOwnPropertyNames(this.props.pickedDataSet).length !== 0 && 
+        Object.getOwnPropertyNames(this.props.pickedAlgorithm).length !== 0) ? false : true;
+    }
+
     render() {
         return (
             <div>
                 <form onSubmit={this.userIdSubmit}>
                     <InputNumber min={1} defaultValue={1} onChange={this.handleChange} />
                     {/* <Button type="primary" onSubmit={this.userIdSubmit}>Recommend!</Button> */}
-                    <input type="submit" value="Recommend!" />
+                    <input type="submit" value="Recommend!" disabled={this.isAlgorithmAndDataSetPicked()} />
                 </form>
 
                 {this.getRecommendationsDiv()}
