@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import RecommendationElementSerializer
 
-from src.results_utils import recommend
+from src.recommender_utils import recommend
 
 
 class ResultsView(APIView):

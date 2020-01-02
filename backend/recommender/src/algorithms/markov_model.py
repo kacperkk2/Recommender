@@ -1,14 +1,4 @@
 #! /usr/bin/python
-import os
-
-import numpy as np
-import pandas as pd
-
-from src.algorithms.handler.algorithm_handler import handle_call
-from src.algorithms.utils.split import split_data
-from src.algorithms.reco_utils.dataset.python_splitters import python_chrono_split
-import sys
-
 
 COL_USER = "UserId"
 COL_ITEM = "PathId"
@@ -55,7 +45,3 @@ class MarkovModel(object):
 
         items_num = min(top_k, len(list_without_passed))
         return list_without_passed[:items_num]
-
-
-if __name__ == '__main__':
-    handle_call(sys.argv, os.path.basename(__file__), MarkovModel())

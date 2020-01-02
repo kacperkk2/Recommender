@@ -1,8 +1,17 @@
 import argparse
 import sys
 import os
+import pandas as pd
+import pickle
 from os import listdir
 from os.path import isfile, join
+from .mapper import map_to_algorithm
+
+COL_USER = "UserId"
+COL_ITEM = "PathId"
+COL_RATING = "Rating"
+COL_PREDICTION = "Prediction"
+COL_TIMESTAMP = "Timestamp"
 
 
 def parse_arguments():
@@ -36,7 +45,19 @@ def main():
     print("BUILDING MODEL FOR PARAMETERS:")
     print("--algorithm " + args.algorithm)
     print("--data_set " + args.data_set)
-    os.system(f'python3 algorithms/{args.algorithm}.py {args.data_set}')
+
+    algorithm_name = args.algorithm[:-len(".py")]
+    path = f"data_sets/{args.data_set}.txt"
+
+    data = pd.read_csv(path, sep=";", names=[COL_USER, COL_ITEM, COL_RATING, COL_TIMESTAMP])
+    data.sort_values(COL_TIMESTAMP, inplace=True)
+    algorithm = map_to_algorithm(algorithm_name)
+    model_to_save = algorithm.prepare_model(data)
+
+    file = open(f'models/{algorithm_name}_{args.data_set}.pkl', 'wb+')
+    pickle.dump(model_to_save, file)
+    file.close()
+
     print("MODEL HAS BEEN BUILD")
     return 0
 

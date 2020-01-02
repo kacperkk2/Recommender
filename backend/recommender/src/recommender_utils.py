@@ -8,6 +8,7 @@ from src.algorithms.most_popular import MostPopular
 from src.algorithms.user_knn import UserKNN
 from src.algorithms.sar import SAR
 from src.algorithms import reco_utils
+from .mapper import map_to_algorithm
 sys.modules['reco_utils'] = reco_utils
 
 from results.models import RecommendationElement
@@ -21,24 +22,14 @@ COL_PREDICTION = "Prediction"
 COL_TIMESTAMP = "Timestamp"
 
 
-def recommend(algorithm, data_set, user_id):
-    if algorithm == "markov_model":
-        model = MarkovModel()
-    elif algorithm == "most_popular":
-        model = MostPopular()
-    elif algorithm == "user_knn":
-        model = UserKNN()
-    elif algorithm == "sar":
-        model = SAR()
-    else:
-        raise NotImplementedError(f"Algorithm with name: '{algorithm}' not implemented "
-                                  f"or not added to results_utils.recommend file")
+def recommend(algorithm_name, data_set, user_id):
+    algorithm = map_to_algorithm(algorithm_name)
 
     file = open(f'{os.path.dirname(os.path.abspath(__file__))}/models/{algorithm}_{data_set}.pkl', 'rb')
     saved_model = pickle.load(file)
     file.close()
 
-    recommendations = model.recommend(saved_model, user_id)
+    recommendations = algorithm.recommend(saved_model, user_id)
     recommendation_objects = [RecommendationElement(*(eval(recommendation))) for recommendation in recommendations]
 
     return recommendation_objects

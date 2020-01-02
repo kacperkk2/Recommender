@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import HistoryElementSerializer
 
-from src.results_utils import user_history
+from src.recommender_utils import user_history
 
 
 class HistoriesView(APIView):

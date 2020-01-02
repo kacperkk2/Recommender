@@ -1,15 +1,5 @@
-import os
-import pickle
 import sys
-
-from src.algorithms.handler.algorithm_handler import handle_call
-
 sys.path.append("../../")
-
-import pandas as pd
-import numpy as np
-from datetime import datetime, timedelta
-from src.algorithms.reco_utils.dataset.python_splitters import python_chrono_split
 from src.algorithms.reco_utils.recommender.sar.sar_singlenode import SARSingleNode
 from src.algorithms.reco_utils.evaluation.python_evaluation import map_at_k, ndcg_at_k, precision_at_k, recall_at_k, mrr_at_k
 
@@ -49,10 +39,6 @@ class SAR(object):
         top_k = self.model.recommend_k_items(user_data, top_k=top_k, remove_seen=True)
 
         return top_k[COL_ITEM].to_list()
-
-
-if __name__ == '__main__':
-    handle_call(sys.argv, os.path.basename(__file__), SAR())
 
 
 # moje wyliczanie metryk, wyliczanie dla pojedynczych usero i dodanie i podzielenie

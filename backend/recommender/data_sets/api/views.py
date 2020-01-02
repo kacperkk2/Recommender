@@ -4,7 +4,7 @@ from ..models import DataSet
 from .serializers import DataSetSerializer
 from os import listdir
 from os.path import isfile, join, dirname
-from src.results_utils import get_data_set_info
+from src.recommender_utils import get_data_set_info
 from ..models import USERS_IDS_LIST_LENGTH
 
 
