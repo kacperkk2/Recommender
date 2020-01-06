@@ -25,7 +25,7 @@ COL_TIMESTAMP = "Timestamp"
 def recommend(algorithm_name, data_set, user_id):
     algorithm = map_to_algorithm(algorithm_name)
 
-    file = open(f'{os.path.dirname(os.path.abspath(__file__))}/models/{algorithm}_{data_set}.pkl', 'rb')
+    file = open(f'{os.path.dirname(os.path.abspath(__file__))}/models/{algorithm_name}_{data_set}.pkl', 'rb')
     saved_model = pickle.load(file)
     file.close()
 

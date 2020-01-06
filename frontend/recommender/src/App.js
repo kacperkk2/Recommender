@@ -1,10 +1,20 @@
 import React from 'react';
 import 'antd/dist/antd.css';
+import { Row, Col } from 'antd';
 
 import AlgorithmList from './components/AlgorithmList';
 import DataSetList from './components/DataSetList';
 import UserId from './components/UserId';
+import PathsList from './components/PathsList';
 import axios from 'axios';
+
+const labelStyle = {
+  padding: '10px', 
+  fontSize: '150%', 
+  fontWeight: 'bold', 
+  textAlign: 'center', 
+  background: '#bee9e6'
+};
 
 class App extends React.Component {
   state = {
@@ -50,23 +60,28 @@ class App extends React.Component {
   render() {
       return (
           <div className="App" style={{padding: '20px', background: '#ECECEC'}}>
-              <h2> Algorithms: </h2>
+
+              <div style={labelStyle}> Algorithms </div>
               <AlgorithmList picked={this.state.pickedAlgorithm} pickedAlgorithm={this.pickedAlgorithm}/>
               
-              <h2> Data sets: </h2>
+              <div style={labelStyle}> Data sets </div>
               <DataSetList picked={this.state.pickedDataSet} pickedDataSet={this.pickedDataSet}/>
           
-              <h2> User id: </h2>
+              <div style={labelStyle}> User id </div>
               <UserId pickedDataSet={this.state.pickedDataSet} pickedAlgorithm={this.state.pickedAlgorithm} userIdSubmit={this.userIdSubmit} />
 
-              <h2> Recommendations list: </h2>
-              <div>
-                {this.state.recommendations.map( recommendation => <div> {recommendation.name}, {recommendation.crag}, {recommendation.sector} </div>)}
-              </div>
-              <h2> User history: </h2>
-              <div>
-                {this.state.userHistory.map( historyElement => <div> {historyElement.name}, {historyElement.crag}, {historyElement.sector} </div>)}
-              </div>
+              <div style={{height: '50px'}}></div>
+
+              <Row gutter={[24, 16]}>
+                <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                  <div style={labelStyle}> Recommendations list </div>
+                  <PathsList elements={this.state.recommendations}/>
+                </Col>
+                <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                  <div style={labelStyle}> User history </div>
+                  <PathsList elements={this.state.userHistory}/>
+                </Col>
+              </Row>
           </div>
       );
   }

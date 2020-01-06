@@ -1,7 +1,7 @@
-from algorithms.markov_model import MarkovModel
-from algorithms.most_popular import MostPopular
-from algorithms.user_knn import UserKNN
-from algorithms.sar import SAR
+from src.algorithms.markov_model import MarkovModel
+from src.algorithms.most_popular import MostPopular
+from src.algorithms.user_knn import UserKNN
+from src.algorithms.sar import SAR
 
 
 def map_to_algorithm(name):

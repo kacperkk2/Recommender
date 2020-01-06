@@ -1,6 +1,7 @@
 import React from 'react';
 import { InputNumber, Button } from 'antd';
 
+
 class UserId extends React.Component {
 
     state = {
@@ -16,19 +17,15 @@ class UserId extends React.Component {
         this.props.userIdSubmit(this.state.userIdInput);
     }
 
-    getRecommendationsDiv = () => {
+    getUsersIdSample = () => {
         if (Object.getOwnPropertyNames(this.props.pickedDataSet).length === 0) {
             return(
-                <div>
-                    <p> Pick a dataset to see users ids examples </p>
-                </div>
+                <p> Pick a dataset to see users ids examples </p>
             )
         }
         else {
             return(
-                <div>
-                   <p> {this.props.pickedDataSet.users_id_sample} </p>
-                </div>
+                <p> Example ids: {JSON.parse(this.props.pickedDataSet.users_id_sample).toString()} </p>
             )
         }
     }
@@ -40,19 +37,17 @@ class UserId extends React.Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.userIdSubmit}>
-                    <InputNumber min={1} defaultValue={1} onChange={this.handleChange} />
-                    {/* <Button type="primary" onSubmit={this.userIdSubmit}>Recommend!</Button> */}
-                    <input type="submit" value="Recommend!" disabled={this.isAlgorithmAndDataSetPicked()} />
-                </form>
+            <div style={{padding: '5px', textAlign: 'center'}}>
+                {this.getUsersIdSample()}
 
-                {this.getRecommendationsDiv()}
+                <InputNumber size='large' min={1} defaultValue={1} onChange={this.handleChange} />
+
+                <div style={{padding: '30px'}}>
+                    <Button style={{ fontSize: '150%', justifyContent: 'center', display: 'flex', margin: '0 auto', height: '70px', width: '400px'}} type="default" onClick={this.userIdSubmit} disabled={this.isAlgorithmAndDataSetPicked()}>Click to get recommendations!</Button>
+                </div>
             </div>
         );
     }
 }
 
 export default UserId;
-
-// value={this.state.value} onChange={this.handleChange}
