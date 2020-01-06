@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -18,8 +19,10 @@ class ResultsView(APIView):
             serializer = RecommendationElementSerializer(payload, many=True)
             response_data = serializer.data
         except KeyError:
-            response_data = "Invalid user id"
+            return JsonResponse({'message': "INVALID_ID"}, status=400)
+        except FileNotFoundError:
+            return JsonResponse({'message': "NO_MODEL"}, status=400)
 
         response = Response(response_data, status=status.HTTP_200_OK)
-        print(response)
+        # print(response_data)
         return response

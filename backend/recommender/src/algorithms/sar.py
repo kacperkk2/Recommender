@@ -2,12 +2,7 @@ import sys
 sys.path.append("../../")
 from src.algorithms.reco_utils.recommender.sar.sar_singlenode import SARSingleNode
 from src.algorithms.reco_utils.evaluation.python_evaluation import map_at_k, ndcg_at_k, precision_at_k, recall_at_k, mrr_at_k
-
-COL_USER = "UserId"
-COL_ITEM = "PathId"
-COL_RATING = "Rating"
-COL_PREDICTION = "Prediction"
-COL_TIMESTAMP = "Timestamp"
+from src.constants import *
 
 
 class SAR(object):
@@ -34,6 +29,8 @@ class SAR(object):
 
     def recommend(self, saved_model, user_id, top_k=10):
         self.available_data, self.model = saved_model
+        if user_id not in self.available_data[COL_USER].unique():
+            raise KeyError
 
         user_data = self.available_data[self.available_data[COL_USER] == user_id]
         top_k = self.model.recommend_k_items(user_data, top_k=top_k, remove_seen=True)

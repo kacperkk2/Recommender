@@ -1,10 +1,5 @@
 import pandas as pd
-
-COL_USER = "UserId"
-COL_ITEM = "PathId"
-COL_RATING = "Rating"
-COL_PREDICTION = "Prediction"
-COL_TIMESTAMP = "Timestamp"
+from src.constants import *
 
 
 def split_data(data, train_split, test_split):

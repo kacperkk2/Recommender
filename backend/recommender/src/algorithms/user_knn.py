@@ -1,12 +1,7 @@
 import numpy as np
 import scipy.sparse as ssp
 import math
-
-COL_USER = "UserId"
-COL_ITEM = "PathId"
-COL_RATING = "Rating"
-COL_PREDICTION = "Prediction"
-COL_TIMESTAMP = "Timestamp"
+from src.constants import *
 
 
 def get_sparse_vector(ids, length, values=None):
@@ -64,6 +59,9 @@ class UserKNN(object):
 
     def recommend(self, saved_model, user_id, top_k=10):
         self.neighborhood_size, self.path_id_map, self.id_path_map, self.binary_user_item, self.n_items, self.n_users, self.dataset = saved_model
+        if user_id not in self.dataset[COL_USER].unique():
+            raise KeyError
+
         user_seq = self.dataset[self.dataset[COL_USER] == user_id][COL_ITEM].tolist()
 
         sim_with_users = self.similarity_with_users(user_seq)

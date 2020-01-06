@@ -1,17 +1,11 @@
 import argparse
 import sys
-import os
 import pandas as pd
 import pickle
 from os import listdir
 from os.path import isfile, join
 from .mapper import map_to_algorithm
-
-COL_USER = "UserId"
-COL_ITEM = "PathId"
-COL_RATING = "Rating"
-COL_PREDICTION = "Prediction"
-COL_TIMESTAMP = "Timestamp"
+from src.constants import *
 
 
 def parse_arguments():

@@ -1,25 +1,15 @@
 import pickle
 import pandas as pd
-
 import os
 import sys
-from src.algorithms.markov_model import MarkovModel
-from src.algorithms.most_popular import MostPopular
-from src.algorithms.user_knn import UserKNN
-from src.algorithms.sar import SAR
+from results.models import RecommendationElement
+from histories.models import HistoryElement
+from src.constants import *
+from os import listdir
+from os.path import isfile, join, dirname
 from src.algorithms import reco_utils
 from .mapper import map_to_algorithm
 sys.modules['reco_utils'] = reco_utils
-
-from results.models import RecommendationElement
-from histories.models import HistoryElement
-
-
-COL_USER = "UserId"
-COL_ITEM = "PathId"
-COL_RATING = "Rating"
-COL_PREDICTION = "Prediction"
-COL_TIMESTAMP = "Timestamp"
 
 
 def recommend(algorithm_name, data_set, user_id):
@@ -52,6 +42,20 @@ def user_history(data_set, user_id):
     history_objects = [HistoryElement(*(eval(history_element))) for history_element in history]
 
     return history_objects
+
+
+def get_algorithms_names():
+    algorithms = [f for f in listdir(join(dirname(__file__), 'algorithms'))
+                  if isfile(join(join(dirname(__file__), 'algorithms'), f))]
+    algorithms = [f[:-len(".py")] for f in algorithms if f.endswith(".py")]
+    return algorithms
+
+
+def get_data_sets_names():
+    data_sets = [f for f in listdir(join(dirname(__file__), 'data_sets'))
+                 if isfile(join(join(dirname(__file__), 'data_sets'), f))]
+    data_sets = [f[:-len(".txt")] for f in data_sets if f.endswith(".txt")]
+    return data_sets
 
 
 # if __name__ == '__main__':

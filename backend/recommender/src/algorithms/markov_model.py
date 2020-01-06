@@ -1,10 +1,4 @@
-#! /usr/bin/python
-
-COL_USER = "UserId"
-COL_ITEM = "PathId"
-COL_RATING = "Rating"
-COL_PREDICTION = "Prediction"
-COL_TIMESTAMP = "Timestamp"
+from src.constants import *
 
 
 class MarkovModel(object):
