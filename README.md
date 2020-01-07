@@ -4,7 +4,8 @@
 To run django server: python manage.py runserver (from backend/recommender)
 To run client app: npm start (frontend/recommender)
 
-Server requirements:  
+Server requirements (backend/requirements.txt)
+crucial:
 Django==3.0  
 django-cors-headers==3.2.0  
 djangorestframework==3.10.3  
