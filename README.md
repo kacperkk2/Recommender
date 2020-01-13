@@ -1,8 +1,8 @@
 # Recommender system
 ## server app (django) and client app (react)
 
-To run django server: python manage.py runserver (from backend/recommender)
-To run client app: npm start (frontend/recommender)
+To run django server: python manage.py runserver (from backend/recommender)  
+To run client app: npm run build, npm install -g serve, serve -s build (frontend/recommender)  
 
 Server requirements (backend/requirements.txt)  
 crucial:  
