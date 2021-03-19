@@ -2,7 +2,7 @@ apipkg==1.5
 asgiref==3.2.3
 Django==3.0
 django-cors-headers==3.2.0
-djangorestframework==3.10.3
+djangorestframework==3.11.2
 execnet==1.7.1
 joblib==0.14.1
 numpy==1.17.4
